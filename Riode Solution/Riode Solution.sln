@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Riode.WebUI", "Riode.WebUI\Riode.WebUI.csproj", "{869A533F-AF5B-4AA4-A429-411883615859}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{869A533F-AF5B-4AA4-A429-411883615859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{869A533F-AF5B-4AA4-A429-411883615859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{869A533F-AF5B-4AA4-A429-411883615859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{869A533F-AF5B-4AA4-A429-411883615859}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3919670A-294A-4387-80A4-C68782701515}
+	EndGlobalSection
+EndGlobal
