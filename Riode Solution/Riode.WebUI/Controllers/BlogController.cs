@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Riode.WebUI.Models.DataContexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +9,21 @@ namespace Riode.WebUI.Controllers
 {
     public class BlogController : Controller
     {
+        readonly RiodeDbContext db;
+        public BlogController(RiodeDbContext db)
+        {
+            this.db = db;
+
+        }
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult Classic()
+        public IActionResult Details()
         {
             return View();
         }
 
-        public IActionResult Listing()
-        {
-            return View();
-        }
+        
     }
 }
