@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using Riode.WebUI.AppCode.Extensions;
 using Riode.WebUI.Models.DataContexts;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,15 @@ namespace Riode.WebUI
         public Startup(IConfiguration configuration)
         {
             this.configuration = configuration;
+
+            string myKey = "Riode";
+
+            string plainText = "test";
+            //string hashedText = plainText.ToMd5();
+
+            string chiperText = plainText.Encrypte(myKey); //nINGNAjcK74=
+
+            string myPlainText = chiperText.Decrypto(myKey);
 
         }
         public void ConfigureServices(IServiceCollection services)
@@ -58,6 +68,15 @@ namespace Riode.WebUI
                         await context.Response.WriteAsync(sr.ReadToEnd());
                     }
                 });
+
+
+
+                endpoints.MapControllerRoute(
+                  name: "areas",
+                  pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
+                );
+
+
                 endpoints.MapControllerRoute("default","{controller=home}/{action=index}/{id?}"); ;
             });
         }

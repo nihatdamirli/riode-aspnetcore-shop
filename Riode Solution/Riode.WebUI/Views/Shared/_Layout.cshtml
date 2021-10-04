@@ -27,14 +27,16 @@
     <link rel="stylesheet" type="text/css" href="~/assets/vendor/magnific-popup/magnific-popup.min.css">
     <link rel="stylesheet" type="text/css" href="~/assets/vendor/owl-carousel/owl.carousel.min.css">
 
+    <link href="~/libs/toastr.js/toastr.css" rel="stylesheet" />
+
     <!-- Main CSS File -->
 
     <link rel="stylesheet" type="text/css" href="~/assets/css/style.min.css">
-    @RenderSection("addcss",required:false)
+    @RenderSection("addcss", required: false)
 </head>
 
 <body class="home">
-   
+
     <div class="page-wrapper">
         <h1 class="d-none">Riode - Responsive eCommerce HTML Template</h1>
         <header class="header">
@@ -266,7 +268,8 @@
                                                     <li><a href="shop-grid-6cols.html">6 Columns Mode</a></li>
                                                     <li><a href="shop-grid-7cols.html">7 Columns Mode</a></li>
                                                     <li><a href="shop-grid-8cols.html">8 Columns Mode</a></li>
-                                                    <li><a href="shop-list.html">List Mode</a>
+                                                    <li>
+                                                        <a href="shop-list.html">List Mode</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -284,13 +287,14 @@
                                             </div>
                                             <!-- End Megamenu -->
                                         </div>
-                                    </div> </li>
+                                    </div>
+                                </li>
                                 <li><a asp-controller="home" asp-action="FAQs">FAQs</a></li>
                                 <li><a asp-controller="home" asp-action="MyAccount">MyAccount</a></li>
                                 <li><a asp-controller="Blog" asp-action="index">Blog</a> </li>
                                 <li><a asp-controller="home" asp-action="contact">Contact Us</a></li>
 
-                              
+
 
                             </ul>
                         </nav>
@@ -326,12 +330,25 @@
                                     <h4 class="widget-title">Subscribe to our Newsletter</h4>
                                     <p class="mb-0">Get all the latest information, Sales and Offers.</p>
                                 </div>
-                                <form action="#" class="input-wrapper input-wrapper-inline">
-                                    <input type="email" class="form-control" name="email" id="email"
-                                           placeholder="Email address here..." required />
+                                <form method="post"
+                                      asp-controller="Home"
+                                      asp-action="Subscribe"
+                                      class="input-wrapper input-wrapper-inline"
+                                      id="frmSubscribe">
+                                    <input type="email"
+                                           class="form-control"
+                                           name="email"
+                                           id="email"
+                                           placeholder="Email address here..."
+                                           data-rule-required="true"
+                                           data-msg-required="Bos buraxila bilmez!"
+                                           data-rule-email="true"
+                                           data-msg-email="E-poct unvaniniz uygun deyil!" />
                                     <button class="btn btn-primary btn-rounded btn-md ml-2" type="submit">
                                         subscribe<i class="d-icon-arrow-right"></i>
                                     </button>
+
+                                    @Html.AntiForgeryToken();
                                 </form>
                             </div>
                             <!-- End Newsletter -->
@@ -707,10 +724,81 @@
     <script src="~/assets/vendor/isotope/isotope.pkgd.min.js"></script>
     <script src="~/assets/vendor/jquery.plugin/jquery.plugin.min.js"></script>
     <script src="~/assets/vendor/jquery.countdown/jquery.countdown.min.js"></script>
+
+    <script src="~/libs/toastr.js/toastr.min.js"></script>
+    <script src="~/libs/jquery-validate/jquery.validate.js"></script>
     <!-- Main JS File -->
     <script src="~/assets/js/main.min.js"></script>
+    <script>
 
-    @RenderSection("addjs",required: false)
+
+        $(document).ready(function () {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+           
+
+
+            $('#frmSubscribe').submit(function (e) {
+                e.preventDefault();
+
+                console.log(e.currentTarget)
+
+                if ($(e.currentTarget).valid() != true)
+                    return;
+                const formdata = new FormData(e.currentTarget);
+
+                $.ajax({
+                    url: '@Url.Action("Subscribe")',
+                    type: 'POST',
+                    data: formdata,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+
+                        console.log(response);
+
+                        if (response.error == false) {
+                            e.currentTarget.reset();
+                            toastr.success(response.message, "Ugurlu");
+
+                        }
+                        else {
+                            toastr.error(response.message, "Xeta");
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response);
+                        toastr.error("Teyin edilmeyen xeta,biraz sonra yeniden yoxlayin!", "Xeta");
+                    }
+
+
+
+                });
+
+            }).validate({
+                errorElement: 'span'
+            });
+        });
+
+    </script>
+
+    @RenderSection("addjs", required: false)
 </body>
 
 

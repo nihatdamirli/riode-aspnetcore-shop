@@ -1,6 +1,6 @@
 ﻿@model Contactpost
 
-@{ 
+@{
     ViewData["Title"] = "Contact";
 }
 
@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-lg-9 col-md-8 col-sm-6 d-flex align-items-center mb-4">
                     <div class="w-100">
-                        <form class="pl-lg-2" method="post">
+                        <form class="pl-lg-2" method="post" id="contact">
                             <h4 class="ls-m font-weight-bold">Let’s Connect</h4>
                             @if (!string.IsNullOrWhiteSpace(ViewBag.Message))
                             {
@@ -61,20 +61,21 @@
                                 <div class="col-md-6 mb-4">
                                     <input asp-for="Name"
                                            class="form-control"
-                                           placeholder="Name *">
-                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                           placeholder="Name *" />
+
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <input asp-for="Email"
                                            class="form-control"
-                                           placeholder="Email *" />
-                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                           placeholder="Email *"
+                                           data-rule-email="true" />
+
                                 </div>
                                 <div class="col-12 mb-4">
                                     <textarea asp-for="Comment"
                                               class="form-control"
                                               placeholder="Comment*"></textarea>
-                                    <span asp-validation-for="Comment" class="text-danger"></span>
+
                                 </div>
                             </div>
                             <button class="btn btn-dark btn-rounded">
@@ -160,7 +161,121 @@
     <div class="grey-section google-map" id="googlemaps" style="height: 386px"></div>
     <!-- End Map Section -->
 </div>
-@section addjs{ 
+@section addcss{
+    <link href="~/libs/toastr.js/toastr.css" rel="stylesheet" />
+    <style>
+        .is-invalid {
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+
+            .is-invalid + span.error {
+                color: #dc3545;
+                font-size: 1rem;
+                margin-left: 4px;
+            }
+
+        .is-valid {
+            border: 1px solid teal;
+        }
+    </style>
+}
+@section addjs{
+    <script src="~/libs/toastr.js/toastr.min.js"></script>
     <script src="~/libs/jquery-validate/jquery.validate.js"></script>
-    <script src="~/libs/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    @*<script src="~/libs/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
+
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        $(document).ready(function () {
+
+            $('[data-val="true"]').each(function (index, item) {
+                $(item).removeAttr('data-val');
+
+                let value = $(item).data('val-required');
+
+                if (value != undefined && value.length > 0) {
+                    $(item).removeAttr('data-val-required');
+
+                    $(item).attr('data-rule-required', true);
+                    $(item).attr('data-msg-required', value);
+                }
+
+                value = $(item).data('val-email');
+
+                if (value != undefined && value.length > 0) {
+                    $(item).removeAttr('data-val-email');
+
+                    $(item).attr('data-rule-email', true);
+                    $(item).attr('data-msg-email', value);
+                }
+            });
+            $('#contact')
+                .submit(function (e) {
+                    e.preventDefault();
+                    const isValid = $(e.currentTarget).valid();
+
+
+                    if (isValid != true)
+                        return;
+
+                    const formData = new FormData(e.currentTarget);
+
+                    $.ajax({
+                        url: '',
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+
+                            console.log(response);
+
+                            if (response.error == false) {
+                                e.currentTarget.reset();
+                                toastr.success(response.message, "Ugurlu");
+                                
+                                $(e.currentTarget).find('.is-valid').removeClass('is-valid');
+                            }
+                            else {
+                                toastr.error(response.message, "Xeta");
+                            }
+                        },
+                        error: function (response) {
+                            console.log(response);
+                            toastr.error("Teyin edilmeyen xeta,biraz sonra yeniden yoxlayin!", "Ugurlu");
+                        }
+
+                    });
+
+
+                })
+                .validate({
+
+                    errorElement: 'span',
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass('is-invalid').removeClass('is-valid');
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).addClass('is-valid').removeClass('is-invalid');
+                    }
+                });
+        });
+    </script>
 }
