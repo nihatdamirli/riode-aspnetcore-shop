@@ -8,25 +8,25 @@ using Microsoft.EntityFrameworkCore;
 using Riode.WebUI.Models.DataContexts;
 using Riode.WebUI.Models.Entities;
 
-namespace Riode.WebUI.areas.Admin.Controllers
+namespace Riode.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ProductSizesController : Controller
+    public class ProductColorsController : Controller
     {
         private readonly RiodeDbContext db;
 
-        public ProductSizesController(RiodeDbContext db)
+        public ProductColorsController(RiodeDbContext db)
         {
-           this.db = db;
+            this.db= db;
         }
 
-        // GET: ProductSizes
+        // GET: Admin/ProductColors
         public async Task<IActionResult> Index()
         {
-            return View(await db.Sizes.ToListAsync());
+            return View(await db.Colors.ToListAsync());
         }
 
-        // GET: ProductSizes/Details/5
+        // GET: Admin/ProductColors/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,39 +34,39 @@ namespace Riode.WebUI.areas.Admin.Controllers
                 return NotFound();
             }
 
-            var productSize = await db.Sizes
+            var productColor = await db.Colors
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (productSize == null)
+            if (productColor == null)
             {
                 return NotFound();
             }
 
-            return View(productSize);
+            return View(productColor);
         }
 
-        // GET: ProductSizes/Create
+        // GET: Admin/ProductColors/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ProductSizes/Create
+        // POST: Admin/ProductColors/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Abbr,Name,Description,Id,CreatedByUserId,CreatedDate,DeletedByUserId,DeletedDate")] ProductSize productSize)
+        public async Task<IActionResult> Create([Bind("HexCode,Name,Description,Id,CreatedByUserId,CreatedDate,DeletedByUserId,DeletedDate")] ProductColor productColor)
         {
             if (ModelState.IsValid)
             {
-               db.Add(productSize);
+                db.Add(productColor);
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(productSize);
+            return View(productColor);
         }
 
-        // GET: ProductSizes/Edit/5
+        // GET: Admin/ProductColors/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +74,22 @@ namespace Riode.WebUI.areas.Admin.Controllers
                 return NotFound();
             }
 
-            var productSize = await db.Sizes.FindAsync(id);
-            if (productSize == null)
+            var productColor = await db.Colors.FindAsync(id);
+            if (productColor == null)
             {
                 return NotFound();
             }
-            return View(productSize);
+            return View(productColor);
         }
 
-        // POST: ProductSizes/Edit/5
+        // POST: Admin/ProductColors/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Abbr,Name,Description,Id,CreatedByUserId,CreatedDate,DeletedByUserId,DeletedDate")] ProductSize productSize)
+        public async Task<IActionResult> Edit(int id, [Bind("HexCode,Name,Description,Id,CreatedByUserId,CreatedDate,DeletedByUserId,DeletedDate")] ProductColor productColor)
         {
-            if (id != productSize.Id)
+            if (id != productColor.Id)
             {
                 return NotFound();
             }
@@ -98,12 +98,12 @@ namespace Riode.WebUI.areas.Admin.Controllers
             {
                 try
                 {
-                   db.Update(productSize);
+                    db.Update(productColor);
                     await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductSizeExists(productSize.Id))
+                    if (!ProductColorExists(productColor.Id))
                     {
                         return NotFound();
                     }
@@ -114,10 +114,10 @@ namespace Riode.WebUI.areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(productSize);
+            return View(productColor);
         }
 
-        // GET: ProductSizes/Delete/5
+        // GET: Admin/ProductColors/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,30 +125,30 @@ namespace Riode.WebUI.areas.Admin.Controllers
                 return NotFound();
             }
 
-            var productSize = await db.Sizes
+            var productColor = await db.Colors
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (productSize == null)
+            if (productColor == null)
             {
                 return NotFound();
             }
 
-            return View(productSize);
+            return View(productColor);
         }
 
-        // POST: ProductSizes/Delete/5
+        // POST: Admin/ProductColors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var productSize = await db.Sizes.FindAsync(id);
-           db.Sizes.Remove(productSize);
+            var productColor = await db.Colors.FindAsync(id);
+            db.Colors.Remove(productColor);
             await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductSizeExists(int id)
+        private bool ProductColorExists(int id)
         {
-            return db.Sizes.Any(e => e.Id == id);
+            return db.Colors.Any(e => e.Id == id);
         }
     }
 }

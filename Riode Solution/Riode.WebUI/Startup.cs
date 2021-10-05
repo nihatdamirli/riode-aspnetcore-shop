@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Riode.WebUI.AppCode.Extensions;
+using Riode.WebUI.AppCode.Middlewears;
+using Riode.WebUI.AppCode.Providers;
 using Riode.WebUI.Models.DataContexts;
 using System;
 using System.Collections.Generic;
@@ -56,7 +58,17 @@ namespace Riode.WebUI
                 app.UseDeveloperExceptionPage();
             }
             app.UseStaticFiles();
+
             app.UseRouting();
+            app.UseRequestLocalization(cfg =>
+            {
+                cfg.AddSupportedUICultures("az", "en");
+                cfg.AddSupportedCultures("az", "en");
+                cfg.RequestCultureProviders.Clear();
+                cfg.RequestCultureProviders.Add(new CultureProvider());
+            });
+
+            app.UseAuditMiddlewear();
 
             app.UseEndpoints(endpoints =>
             {

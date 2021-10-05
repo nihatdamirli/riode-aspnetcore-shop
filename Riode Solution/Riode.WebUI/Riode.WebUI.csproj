@@ -113,6 +113,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="areas\Admin\Views\ProductColors\" />
     <Folder Include="wwwroot\libs\" />
   </ItemGroup>
 
@@ -212,6 +213,25 @@
     <None Include="wwwroot\Admin\bower_components\swiper\package\js\swiper.min.js" />
     <None Include="wwwroot\Admin\bower_components\switchery\dist\switchery.min.js" />
     <None Include="wwwroot\Admin\bower_components\underscore\underscore-min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="AppCode\Resources\Admin\Sidebar\Sidebar.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Sidebar.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="AppCode\Resources\Admin\Sidebar\Sidebar.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="AppCode\Resources\Admin\Sidebar\Sidebar.resx">
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Sidebar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

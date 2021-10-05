@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Riode.WebUI.Models.Entities.ProductSize>
+﻿@model IEnumerable<Riode.WebUI.Models.Entities.ProductColor>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,7 +13,7 @@
             <div class="col-lg-8">
                 <div class="page-header-title">
                     <div class="d-inline">
-                        <h4>Ölcülər</h4>
+                        <h4>Rənglərr</h4>
                         <span>
                             lorem ipsum dolor sit amet, consectetur adipisicing
                             elit
@@ -28,7 +28,7 @@
                             <a href="../index.html"> <i class="feather icon-home"></i> </a>
                         </li>
                         <li class="breadcrumb-item" style="float: left;">
-                            <a href="#!">Olculer</a>
+                            <a href="#!">Rənglər</a>
                         </li>
                         <li class="breadcrumb-item" style="float: left;">
                             <a href="#!">Border Table</a>
@@ -44,7 +44,7 @@
         <!-- Horizontal-border table start -->
         <div class="card">
             <div class="card-header">
-                <h5>Ölcülər</h5>
+                <h5>Rənglər</h5>
                 @*<span>
                     Example of <code>horizontal</code> table borders. This is a
                     default table border style attached to <code>.table</code> class.
@@ -61,7 +61,7 @@
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Abbr)
+                                    @Html.DisplayNameFor(model => model.HexCode)
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Name)
@@ -74,7 +74,12 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Abbr)
+                                        <div class="color-viewer-container">
+                                            <span class="color-viewer" style="background-color:@item.HexCode"></span>
+                                            @item.HexCode
+                                        </div>
+
+                                      
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Name)

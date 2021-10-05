@@ -33,6 +33,7 @@ namespace Riode.WebUI.Models.DataContexts
         public DbSet<Specifications> Specification{ get; set; }
         public DbSet<SpecificationsCategoryItem> SpecificationsCategoryCollection{ get; set; }
         public DbSet<SpecificationValue> SpecificationValues { get; set; }
+        public DbSet<AuditLog> AuditLogs { get; set; }
         
     }
 }

@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+
 <head>
     <title>@ViewBag.Title | Riode</title>
     <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
@@ -34,6 +36,40 @@
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/css/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="~/Admin/assets/scss/partials/menu/_pcmenu.html">
+
+
+
+    <style>
+
+        p.form-control,
+        p.textarea{
+            font-size: 16px;
+            border-radius: 2px;
+            border:1px solid black;
+            margin-bottom: 0;
+        }
+
+        p.textarea{
+            min-height: 150px
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: none;
+        }
+        .color-viewer-container{
+            display:flex;
+            align-items:center;
+        }
+        .color-viewer-container .color-viewer {
+            display: inline-block;
+            border: 1px solid #dee2e6;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -379,6 +415,18 @@
                                             </a>
                                         </li>
                                     </ul>
+                                </li>
+                                <li class=" ">
+                                    <a asp-controller="Productsizes" asp-action="index">
+                                        <span class="pcoded-micon"><i class="feather icon-tv"></i></span>
+                                        <span class="pcoded-mtext">@Sidebar.Sizes</span>
+                                    </a>
+                                </li>
+                                <li class=" ">
+                                    <a asp-controller="Productcolors" asp-action="index">
+                                        <span class="pcoded-micon"><i class="feather icon-tv"></i></span>
+                                        <span class="pcoded-mtext">@Sidebar.Colors</span>
+                                    </a>
                                 </li>
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
